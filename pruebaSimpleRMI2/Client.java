@@ -18,6 +18,10 @@ package example.hello;
 			long i;
 
 			int n = 100;
+
+			long miNum = 0;
+			long milisFaltantes;
+			long dtMax = 0, dtMin =0;
 			
             String response,responseSum;
             String host = (args.length < 1) ? null : args[0];
@@ -25,9 +29,15 @@ package example.hello;
             try{
                 Registry registry = LocateRegistry.getRegistry(host);
 				
+				IServDisparo servDisparo = (IServDisparo) registry.lookup("ServidorDeDisparo");
+				miNum = servDisparo.quienSoy();
+				milisFaltantes = servDisparo.deltaTEnMilis();
 
+				System.out.println("Cliente " + miNum + " faltan " + milisFaltantes  + " milisegundos");
 
 				Hola stub = (Hola) registry.lookup("Hola");
+
+		Thread.currentThread().sleep(milisFaltantes);
 				
                 for(i=0;i<n;i++){
 
@@ -41,12 +51,22 @@ package example.hello;
 					
 					sum += tiempoResp;
 					sum2 += Math.pow(tiempoResp,2);
+
+					if(i == 0){
+                   		dtMin = tiempoResp;
+                   		dtMax = tiempoResp;
+               		}else{
+                   		if( tiempoResp < dtMin ) dtMin = tiempoResp;
+                   		if( tiempoResp > dtMax ) dtMax = tiempoResp;
+               		}
 					
 					System.out.println("response: " + response);
 					System.out.println(responseSum);
 
 					System.out.println("Tiempo de espera: "+(tiempoResp*1e-9)+" seg \n");
                 } 
+
+		servDisparo.acumula(sum, sum2, n, dtMax, dtMin);
 
 				avg = sum/n;
 				std = Math.sqrt((sum2-n*Math.pow(avg,2))/(n-1));

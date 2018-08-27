@@ -34,12 +34,12 @@ public class Distribuidor
             System.out.println("uso:\n" + 
                                "Distribuidor Master  ip_host_localhost reset deltaTEnSegs\n" +
                                "Distribuidor Master  ip_host_localhost [reporta]\n"            +
-                               "Distribuidor Cliente ip_host_localhost");
+                               "Distribuidor Client ip_host_localhost");
         }
         else
         {
             if( args[0].compareToIgnoreCase("Master")  == 0) Master.main( argsPar );
-            if( args[0].compareToIgnoreCase("Cliente") == 0) Client.main( argsPar );
+            if( args[0].compareToIgnoreCase("Client") == 0) Client.main( argsPar );
             if( args[0].compareToIgnoreCase("Server") == 0) Server.main( argsPar );
             if( args[0].compareToIgnoreCase("ServidorDeDisparo") == 0) ServidorDeDisparo.main( argsPar );
         }

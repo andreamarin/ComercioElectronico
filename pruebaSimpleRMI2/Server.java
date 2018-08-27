@@ -35,7 +35,7 @@ public class Server implements Hola {
         double resp = 0.0;
 
         try{
-            Thread.currentThread().sleep(2);
+            Thread.currentThread().sleep(50);
             resp = a+b;
         }catch(Exception e){
 

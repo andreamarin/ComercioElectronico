@@ -4,19 +4,19 @@ echo uso:
 echo 3_ejem Segs_a_Disparo HOSTNAME (en caso de omitirlo se usa localhost, si se omiten asimismo los segundos usa 15)
 echo on
 
-set cb=%cd%\pruebaSimple.jar
+set cb=%cd%\example/hello
 
 if [%1] NEQ [] goto conDeltaT
-java -Djava.rmi.server.codebase=file:%cb% -jar %cb% Master localhost reset 15
+java -Djava.rmi.server.codebase=file:%cb%  example.hello.Master localhost reset 15
 goto fin
 
 :conDeltaT
 if [%2] NEQ [] goto conHost
-java -Djava.rmi.server.codebase=file:%cb% -jar %cb% Master localhost reset %1
+java -Djava.rmi.server.codebase=file:%cb% example.hello.Master localhost reset %1
 goto fin
 
 :conHost
-java -Djava.rmi.server.codebase=file:%cb% -jar %cb% Master %2 reset %1
+java -Djava.rmi.server.codebase=file:%cb% example.hello.Master %2 reset %1
 :fin
 
 
