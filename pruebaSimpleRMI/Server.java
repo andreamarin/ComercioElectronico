@@ -13,7 +13,7 @@ public class Server implements Hola {
     public String sayHello(){
 		
 		// Delay con distribucion exponencial
-		double lambda = 1.0;
+		double lambda = 2.0;
 		double delay = -(1/lambda)*Math.log(Math.random());
 		
 		long milis = (long) Math.floor(delay);
@@ -31,8 +31,17 @@ public class Server implements Hola {
         return "Servicio no. " + cuantos + " proporcionado desde " + strHostname+ " con un delay de "+delay+" nanosegundos.";
     }
 	
-	public double suma(){
-		return 0;
+	public String suma(double a, double b){
+        double resp = 0.0;
+
+        try{
+            Thread.currentThread().sleep(50);
+            resp = a+b;
+        }catch(Exception e){
+
+        }
+ 
+		return "La suma de "+a+" + "+b+" es "+resp+" .";
 	}
         
     public static void main(String args[]) {

@@ -1,0 +1,3 @@
+cd C:\pruebaSimpleRMI
+
+

@@ -11,13 +11,14 @@ package example.hello;
             long i;
 			double sum = 0.0;
 			double sum2 = 0.0;
-			double dt = 0.0;
+			double tiempoResp = 0.0;
 			double avg = 0.0;
 			double std = 0.0;
-			int n = 1000;
-			long t0,t1;
+			double x = 0.0;
+			double y = 0.0;
+			int n = 10000;
 			
-            String response;
+            String response,responseSum;
             String host = (args.length < 1) ? null : args[0];
 			
             try{
@@ -25,28 +26,35 @@ package example.hello;
                 Hola stub = (Hola) registry.lookup("Hola");
 				
                 for(i=0;i<n;i++){
+
+					x = Math.round(Math.random()*8000)/100;
+					y = Math.round(Math.random()*8000)/100;
 					
-					t0 = System.nanoTime();
+					tiempoResp = System.nanoTime();
 					response = stub.sayHello();
-					t1 = System.nanoTime();
+					responseSum = stub.suma(x,y);
+					tiempoResp = System.nanoTime() - tiempoResp;
 					
-					dt += (double)(t1-t0);
-					sum += dt;
-					sum2 += dt*dt;
+					sum += tiempoResp;
+					sum2 += Math.pow(tiempoResp,2);
 					
 					System.out.println("response: " + response);
+					System.out.println(responseSum);
+
+					System.out.println("Tiempo de espera: "+(tiempoResp*1e-9)+" seg \n");
                 } 
 
 				avg = sum/n;
-				std = Math.sqrt((sum2-n*avg*avg)/(n-1));
+				std = Math.sqrt((sum2-n*Math.pow(avg,2))/(n-1));
 				
 				avg *= 1e-9;
+				std *= 1e-9;
 				
-				System.out.println("=============================================");
+				System.out.println("===================================================");
 				System.out.println("Para "+n+" solicitudes de ejecucion.");
-				System.out.println("Promedio: "+avg+" segundos.");
-				System.out.println("Desviacion estandar: "+std+" nanosegundos.");
-				System.out.println("=============================================");
+				System.out.println("Promedio: "+avg+" seg.");
+				System.out.println("Desviacion estandar: "+std+" seg.");
+				System.out.println("===================================================");
 				
             } 
             catch (Exception e) 
