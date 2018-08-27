@@ -4,8 +4,7 @@ echo uso:
 echo 3_ejem Segs_a_Disparo HOSTNAME (en caso de omitirlo se usa localhost, si se omiten asimismo los segundos usa 15)
 echo on
 
-
-set cb=%cd%\tstRMI.jar
+set cb=%cd%\pruebaSimple.jar
 
 if [%1] NEQ [] goto conDeltaT
 java -Djava.rmi.server.codebase=file:%cb% -jar %cb% Master localhost reset 15

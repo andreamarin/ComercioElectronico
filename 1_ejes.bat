@@ -9,7 +9,7 @@ echo uso:
 echo 1_ejes HOSTNAME (en caso de omitirlo se usa localhost)
 echo on
 
-set cb=%cd%\tstRMI.jar
+set cb=%cd%\pruebaSimple.jar
 
 if [%1] NEQ [] goto conHost
 java -Djava.rmi.server.codebase=file:%cb% -jar %cb% Server 

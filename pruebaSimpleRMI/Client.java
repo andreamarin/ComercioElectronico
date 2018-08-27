@@ -8,22 +8,34 @@ package example.hello;
         private Client() {}
 
         public static void main(String[] args) {
-            long i;
-			double sum = 0.0;
-			double sum2 = 0.0;
-			double tiempoResp = 0.0;
+			long sum = 0;
+			long sum2 = 0;
+			long tiempoResp = 0;
 			double avg = 0.0;
 			double std = 0.0;
 			double x = 0.0;
 			double y = 0.0;
+			long i;
+
 			int n = 10000;
+
+			long miNum = 0;
+			long milisFaltantes;
+			long dtMax = 0, dtMin =0;
 			
             String response,responseSum;
             String host = (args.length < 1) ? null : args[0];
 			
             try{
                 Registry registry = LocateRegistry.getRegistry(host);
-                Hola stub = (Hola) registry.lookup("Hola");
+				
+				IServDisparo servDisparo = (IServDisparo) registry.lookup("ServidorDeDisparo");
+				miNum = servDisparo.quienSoy();
+				milisFaltantes = servDisparo.deltaTEnMilis();
+
+				System.out.println("Cliente " + miNum + " faltan " + milisFaltantes  + " milisegundos");
+
+				Hola stub = (Hola) registry.lookup("Hola");
 				
                 for(i=0;i<n;i++){
 
@@ -37,6 +49,14 @@ package example.hello;
 					
 					sum += tiempoResp;
 					sum2 += Math.pow(tiempoResp,2);
+
+					if(i == 0){
+                   		dtMin = tiempoResp;
+                   		dtMax = tiempoResp;
+               		}else{
+                   		if( tiempoResp < dtMin ) dtMin = tiempoResp;
+                   		if( tiempoResp > dtMax ) dtMax = tiempoResp;
+               		}
 					
 					System.out.println("response: " + response);
 					System.out.println(responseSum);
@@ -56,6 +76,7 @@ package example.hello;
 				System.out.println("Desviacion estandar: "+std+" seg.");
 				System.out.println("===================================================");
 				
+				servDisparo.acumula(sum, sum2, n, dtMax, dtMin);
             } 
             catch (Exception e) 
             {

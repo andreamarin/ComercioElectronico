@@ -4,7 +4,7 @@ echo uso:
 echo 2_ejesd HOSTNAME (en caso de omitirlo se usa localhost)
 echo on
 
-set cb=%cd%\tstRMI.jar
+set cb=%cd%\pruebaSimple.jar
 
 if [%1] NEQ [] goto conHost
 java -Djava.rmi.server.codebase=file:%cb% -jar %cb% ServidorDeDisparo 
