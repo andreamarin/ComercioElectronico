@@ -12,7 +12,7 @@ goto fin
 
 :conclientes
 if [%2] NEQ [] goto conHost
-estresador %1 -Djava.rmi.server.codebase=file:%cb% example.hello.Client  localhost
+estresador %1 -Djava.rmi.server.codebase=file:%cb% example.hello.Client localhost
 goto fin
 
 :conHost
