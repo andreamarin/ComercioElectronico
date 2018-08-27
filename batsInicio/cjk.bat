@@ -1,0 +1,3 @@
+cd C:/ComercioElectronico/pruebaSimpleRMI
+
+
