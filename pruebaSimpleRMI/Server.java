@@ -35,8 +35,9 @@ public class Server implements Hola {
         double resp = 0.0;
 
         try{
-            Thread.currentThread().sleep(2);
-            resp = a+b;
+            //Thread.currentThread().sleep(2);
+            System.out.println("Proporcionando el servicio no. " + cuantos);
+			resp = a+b;
         }catch(Exception e){
 
         }

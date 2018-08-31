@@ -17,7 +17,7 @@ package example.hello;
 			double y = 0.0;
 			long i;
 
-			int n = 100;
+			int n = 1000;
 			
             String response,responseSum;
             String host = (args.length < 1) ? null : args[0];
@@ -42,7 +42,7 @@ package example.hello;
 					sum += tiempoResp;
 					sum2 += Math.pow(tiempoResp,2);
 					
-					System.out.println("response: " + response);
+					//System.out.println("response: " + response);
 					System.out.println(responseSum);
 
 					System.out.println("Tiempo de espera: "+(tiempoResp*1e-9)+" seg \n");
