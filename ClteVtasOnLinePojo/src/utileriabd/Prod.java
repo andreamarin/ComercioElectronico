@@ -9,6 +9,27 @@ package utileriabd;
  *
  * @author sdist
  */
+
 public class Prod {
-    
+   private double unitPr;
+   private String stockCode;
+   private String prodDescription;
+   
+   public Prod(String stockCode, String prodDescription, double unitPr){
+       this.stockCode = stockCode;
+       this.prodDescription = prodDescription;
+       this.unitPr = unitPr;
+   }
+
+    public double getUnitPr() {
+        return unitPr;
+    }
+
+    public String getStockCode() {
+        return stockCode;
+    }
+
+    public String getProdDescription() {
+        return prodDescription;
+    }
 }

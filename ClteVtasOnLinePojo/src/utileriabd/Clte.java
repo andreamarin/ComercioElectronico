@@ -13,5 +13,17 @@ public class Clte {
     
     private String customerID = null;
     private String country = null;
+
+    public Clte(String customerID, String country){
+        this.customerID = customerID;
+        this.country = country;
+    }
     
+    public String getCustomerID(){
+        return customerID;
+    }
+    
+    public String getCountry(){
+        return country;
+    }
 }
