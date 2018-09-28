@@ -1,0 +1,16 @@
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+GRAVE: Info Log
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+ADVERTENCIA: Info Log
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+INFORMACIÓN: Info Log
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+MÁS DETALLADO: Really not important
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+GRAVE: Info Log
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+ADVERTENCIA: Info Log
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+INFORMACIÓN: Info Log
+sep 28, 2018 9:22:50 AM tstlogger.UseLogger doSomeThingAndLog
+MÁS DETALLADO: Really not important

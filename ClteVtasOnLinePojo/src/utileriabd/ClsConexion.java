@@ -3,6 +3,7 @@ package utileriabd;
 import java.sql.*;
 import java.util.*;
 import com.healthmarketscience.jackcess.*;
+import excepcionesAplicativas.ExcepcionAplicativa;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -31,15 +32,15 @@ public class ClsConexion
         this.strNomDB = strNomDB + ".accdb";
     }
     
-    public boolean conectate( String unUID, String unPwd )
+    public boolean conectate( String unUID, String unPwd ) throws Exception
     {
         strUID = unUID;
         String strSel = "Select contrasenha from tblUsuarios where clvUsuario = '" 
                         + unUID + "'";
         boolean res = false;
-        
-        try
-        {
+        con         = null;
+        //try
+        //{
             //Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
             //con = DriverManager.getConnection( "jdbc:odbc:" + 
             //                                    strDSN, "", "");
@@ -66,7 +67,7 @@ public class ClsConexion
               con.close();
               con = null;
             }
-        }
+        /*}
         catch( Exception e )
         { 
            // eliminar el despliegue de esta exepción, mandarlo a un log y relanzar la exepción. 
@@ -74,19 +75,19 @@ public class ClsConexion
            System.out.println(
                     "Can't open file \"" + strNomDB + "\". Check if it permitted by security settings of path/file.\nMore info:\n" + e + " Error");
            con = null;
-        }
+        }*/
         return res;
     }
 // ---------------------------------------------------------------------------    
     public boolean conectado() { return con != null; }
 // ---------------------------------------------------------------------------    
-    public java.sql.ResultSet obtenRS( String strTV )
+    public java.sql.ResultSet obtenRS( String strTV ) throws SQLException
     {
         return obtenRegSelect( "Select * FROM " + strTV );
     }
 // ---------------------------------------------------------------------------    
    public ResultSet obtenRS( String strTV, 
-                                             java.util.TreeMap<String,ClsCampoBD> colCampos)
+          java.util.TreeMap<String,ClsCampoBD> colCampos) throws SQLException
    {
       String strSelect = "",
              strWhere  = "";
@@ -106,31 +107,35 @@ public class ClsConexion
       return rs; 
    }
 // ---------------------------------------------------------------------------    
-   public ResultSet obtenRegSelect( String strSelect )
+   public ResultSet obtenRegSelect( String strSelect ) throws SQLException
    {
        java.sql.ResultSet rs = null;
        java.sql.Statement st = null;
-       try
-       {
+       //try
+       //{
            st = con.createStatement();  
            rs = st.executeQuery( strSelect );
+       /*
        }
        catch(Exception e )
        {
            e.printStackTrace();
            rs = null;
        }
-       
+       */
        return rs;
    }
 // ---------------------------------------------------------------------------    
-   public String impRS( java.sql.ResultSet rs )
+   public String impRS( java.sql.ResultSet rs ) throws SQLException
    {
+       //
+       //  funcionalidad solamente para pruebas
+       //
        String                     strRes = "";
        java.sql.ResultSetMetaData rsmd   = null;
        int n,nCol,i;
-       try
-       {
+       //try
+       //{
            rsmd = rs.getMetaData();
            nCol = rsmd.getColumnCount();
            for( i = 1; i<=nCol; i++ )
@@ -145,18 +150,18 @@ public class ClsConexion
                   strRes += rs.getString(i) + " ";
                strRes += '\n';
            }
-       }
+       /*}
        catch(Exception e )
        {
            e.printStackTrace();
-       }
+       }*/
        
        return strRes;
    }
 // --------------------------------------------------------------------------- 
-   public java.util.TreeMap<String,ClsCampoBD> obtenMapaCampos( java.sql.ResultSet rs )
+   public java.util.TreeMap<String,ClsCampoBD> obtenMapaCampos( java.sql.ResultSet rs ) throws SQLException
    {
-       java.util.TreeMap<String,ClsCampoBD>  arbolCampos   = new java.util.TreeMap<String,ClsCampoBD>();
+       java.util.TreeMap<String,ClsCampoBD>  arbolCampos   = new java.util.TreeMap<>();
        ResultSetMetaData  rsmd          = null;
        ClsCampoBD         campo         = null;
        String             strNomCampo   = null, 
@@ -164,8 +169,8 @@ public class ClsConexion
        
        int nCol,i;
        
-       try
-       {
+       //try
+       //{
            rsmd = rs.getMetaData();
            nCol = rsmd.getColumnCount();
            for( i = 1; i<=nCol; i++ )
@@ -176,11 +181,11 @@ public class ClsConexion
               arbolCampos.put(strNomCampo, campo );
            }
               
-       }
+       /*}
        catch(Exception e )
        {
            e.printStackTrace();
-       }
+       }*/
        
        return arbolCampos;
   
@@ -221,7 +226,7 @@ public class ClsConexion
           campo =  (ClsCampoBD)((Map.Entry) (it.next())).getValue();
           if( campo.nombre.length() > 0 )
           {
-             if( campo.nombre == "*" )
+             if( "*".equals(campo.nombre) )
              {
                  strSelect = "*";
                  break;
@@ -235,7 +240,7 @@ public class ClsConexion
         return "Select " + strSelect;
    }
 // ---------------------------------------------------------------------------    
-   public boolean insertaReg(String strTV, java.util.TreeMap<String,ClsCampoBD> colCampos )
+   public boolean insertaReg(String strTV, java.util.TreeMap<String,ClsCampoBD> colCampos ) throws SQLException
    {
        String      strCampos =  "Insert into " + strTV + " (";
        String      strValores  = " Values (";
@@ -268,21 +273,16 @@ public class ClsConexion
        strInsertar = strCampos + strValores;
        System.out.println( strInsertar );
        
-       try
-       {
-          Statement s = con.createStatement();
-         k = s.executeUpdate(strInsertar);
-          s.close();
-       }
-       catch( Exception e )
-       {
-           e.printStackTrace();
-       }
+
+       Statement s = con.createStatement();
+       k = s.executeUpdate(strInsertar);
+       s.close();
+       
        return  k > 0 ;
     
    }
 // --------------------------------------------------------------------------  
-   public boolean modificaReg(String strTV, java.util.TreeMap<String,ClsCampoBD> colCampos )
+   public boolean modificaReg(String strTV, java.util.TreeMap<String,ClsCampoBD> colCampos ) throws SQLException
    {
        String      strCampos   = "Update " + strTV + " set ";
        
@@ -317,22 +317,23 @@ public class ClsConexion
        
        System.out.println( strCampos );
        
-       try
-       {
+       //try
+       //{
           java.sql.Statement s = con.createStatement();
          k = s.executeUpdate(strCampos);
           s.close();
-       }
+       /*}
        catch( Exception e )
        {
            e.printStackTrace();
-       }
+       }*/
+       
        return  k > 0 ;
     
    }
 // --------------------------------------------------------------------------  
    public boolean eliminaRegs( String strTV, 
-                                             java.util.TreeMap<String,ClsCampoBD> colCampos)
+          java.util.TreeMap<String,ClsCampoBD> colCampos) throws SQLException
    {
       String strDelete = "",
              strWhere  = "";
@@ -346,73 +347,74 @@ public class ClsConexion
           strDelete += " Where " + strWhere;
           
       System.out.println( strDelete);    
-       try
-       {
+       //try
+       //{
           java.sql.Statement s = con.createStatement();
           k = s.executeUpdate(strDelete);
           s.close();
-       }
+       /*}
        catch( Exception e )
        {
            e.printStackTrace();
-       }
+       }*/
+       
        return  k > 0 ;
     
    }
 // ---------------------------------------------------------------------------    
-  public void cierraCon()
+  public void cierraCon() throws SQLException
    {
-       try
-       {
+       //try
+       //{
            con.close();
-       }
+       /*}
        catch( Exception e )
        {
            e.printStackTrace();
-       }
+       }*/
    }
   // ---------------------------------------------------------------------------    
-  public int cuentaRegs(String strTV)
+  public int cuentaRegs(String strTV) throws SQLException
   {
       int cuantos;
       cuantos = 0;
       java.sql.ResultSet rs;
   
-        try 
-        {
+        //try 
+        //{
             Statement st = con.createStatement(); //ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
             rs = st.executeQuery("select count(*) from " + strTV + ";");
             rs.next();
             cuantos = rs.getInt(1);
             rs.close();
-        }
+        /*}
         catch (SQLException ex) 
         {
             Logger.getLogger(ClsConexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
         return cuantos;
   }
   // ---------------------------------------------------------------------------    
-  public String[] cargaDatos(int camposNum, String strTV)
+  public String[] cargaDatos(int camposNum, String strTV) throws SQLException
   {   
       java.sql.ResultSet rs;
       int cuantos = this.cuentaRegs(strTV);
       String[] arr_datos = new String[cuantos];
       rs = this.obtenRS(strTV);
-      try
-      {
+      //try
+      //{
         rs.next();
         for(int k = 0; k < cuantos; k++)
         {
           arr_datos[k] = rs.getString(camposNum);
           rs.next();
         }
-      }
+      /*}
       catch(Exception e)
       {
           e.printStackTrace();
-      }
+      }*/
      
       return arr_datos;
   }

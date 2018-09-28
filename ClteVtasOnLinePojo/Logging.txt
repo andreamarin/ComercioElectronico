@@ -1,0 +1,8 @@
+sep 27, 2018 6:30:33 PM tda.ClsTienda main
+INFORMACIÓN: Iniciando el main de ClsTienda
+sep 27, 2018 6:30:36 PM tda.ClsTienda altaCUSTOMER
+INFORMACIÓN: tratando de dar de alta el customer 50564
+sep 27, 2018 6:30:36 PM excepcionesAplicativas.ExcepcionAplicativa <init>
+INFORMACIÓN: 20001 altaCUSTOMER UCAExc:::3.0.3.1 violación del restricción de integridad: violación de índice o clave única; SYS_PK_10293 table: CUSTOMERS
+sep 27, 2018 6:30:36 PM tda.ClsTienda main
+INFORMACIÓN: terminando la ejecución del main de ClsTienda
